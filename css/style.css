@@ -57,17 +57,17 @@ button:focus-visible {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: radial-gradient(circle, rgba(232, 234, 230, 0.5) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(20, 20, 20, 0.55) 1px, transparent 1px);
   background-size: 28px 28px;
-  opacity: 0.035;
+  opacity: 0.05;
 }
 .grain {
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.025;
-  mix-blend-mode: overlay;
+  opacity: 0.02;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 body::before {
@@ -79,7 +79,7 @@ body::before {
   height: 60vw;
   max-width: 800px;
   max-height: 800px;
-  background: radial-gradient(circle, rgba(200, 255, 46, 0.07), transparent 70%);
+  background: radial-gradient(circle, rgba(79, 107, 20, 0.07), transparent 70%);
   z-index: 0;
   pointer-events: none;
 }
@@ -102,7 +102,7 @@ body::before {
   position: sticky;
   top: 0;
   z-index: var(--z-nav);
-  background: rgba(8, 9, 11, 0.92);
+  background: rgba(247, 245, 240, 0.92);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--hairline);
   padding: var(--space-2) var(--page-pad);

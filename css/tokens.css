@@ -2,16 +2,19 @@
    tokens.css — design tokens only (color / type / space / motion)
    ============================================================ */
 :root {
-  /* --- color --- */
-  --bg:            #08090B;
-  --surface:       #0E1014;
-  --chip:          #16191F;
-  --hairline:      #22262E;
-  --muted:         #737B87;
-  --text:          #E8EAE6;
-  --accent:        #C8FF2E;
-  --accent-dim:    #9FD421;
-  --granted:       #FF5A1F;
+  /* --- color: warm-paper light theme ---
+     bg/surface/chip form a light-to-slightly-deeper paper ramp (inverse of the
+     old dark ramp). text/muted/accent/granted all verified >=4.5:1 against both
+     bg and surface (WCAG AA body text) — see contrast check in repo history. */
+  --bg:            #F7F5F0;
+  --surface:       #EFEBE3;
+  --chip:          #E9E1D2;
+  --hairline:      #DCD6CA;
+  --muted:         #6B6459;
+  --text:          #141414;
+  --accent:        #4F6B14;
+  --accent-dim:    #3A4F0D;
+  --granted:       #9C4200;
 
   /* --- type --- */
   --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
