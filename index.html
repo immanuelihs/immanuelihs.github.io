@@ -56,16 +56,17 @@
   <a href="#hero" class="top-nav__brand">SR</a>
   <button class="top-nav__toggle" id="nav-toggle" aria-expanded="false" aria-controls="top-nav-list">§ Menu</button>
   <ul class="top-nav__list" id="top-nav-list">
-    <li><a href="#stats">§01 Snapshot</a></li>
-    <li><a href="#patents">§02 Patents</a></li>
-    <li><a href="#production">§03 Production</a></li>
-    <li><a href="#about">§04 About</a></li>
-    <li><a href="#talks">§05 Talks</a></li>
-    <li><a href="#experience">§06 Experience</a></li>
-    <li><a href="#publications">§07 Publications</a></li>
-    <li><a href="#toolbox">§08 Toolbox</a></li>
-    <li><a href="#education">§09 Education</a></li>
-    <li><a href="#contact">§10 Contact</a></li>
+    <li><a href="#specialization">§01 Specialization</a></li>
+    <li><a href="#stats">§02 Snapshot</a></li>
+    <li><a href="#patents">§03 Patents</a></li>
+    <li><a href="#production">§04 Production</a></li>
+    <li><a href="#about">§05 About</a></li>
+    <li><a href="#talks">§06 Talks</a></li>
+    <li><a href="#experience">§07 Experience</a></li>
+    <li><a href="#publications">§08 Publications</a></li>
+    <li><a href="#toolbox">§09 Toolbox</a></li>
+    <li><a href="#education">§10 Education</a></li>
+    <li><a href="#contact">§11 Contact</a></li>
   </ul>
 </nav>
 
@@ -75,16 +76,17 @@
   </div>
   <ol class="rail__numbers">
     <li><a href="#hero">§00</a></li>
-    <li><a href="#stats">§01</a></li>
-    <li><a href="#patents">§02</a></li>
-    <li><a href="#production">§03</a></li>
-    <li><a href="#about">§04</a></li>
-    <li><a href="#talks">§05</a></li>
-    <li><a href="#experience">§06</a></li>
-    <li><a href="#publications">§07</a></li>
-    <li><a href="#toolbox">§08</a></li>
-    <li><a href="#education">§09</a></li>
-    <li><a href="#contact">§10</a></li>
+    <li><a href="#specialization">§01</a></li>
+    <li><a href="#stats">§02</a></li>
+    <li><a href="#patents">§03</a></li>
+    <li><a href="#production">§04</a></li>
+    <li><a href="#about">§05</a></li>
+    <li><a href="#talks">§06</a></li>
+    <li><a href="#experience">§07</a></li>
+    <li><a href="#publications">§08</a></li>
+    <li><a href="#toolbox">§09</a></li>
+    <li><a href="#education">§10</a></li>
+    <li><a href="#contact">§11</a></li>
   </ol>
 </div>
 
@@ -157,9 +159,98 @@
   </div>
 </section>
 
-<!-- ============ §01 SNAPSHOT STATS ============ -->
+<!-- ============ §01 SPECIALIZATION ============ -->
+<section class="section" id="specialization">
+  <p class="section-num">§01 · Specialization</p>
+  <p class="thread-intro prose reveal">What I'm good at, and why it fits together.</p>
+
+  <div class="entry-list">
+    <article class="entry reveal">
+      <div class="entry__meta mono">
+        <p class="entry__name">01 — Agentic verification &amp; faithfulness</p>
+      </div>
+      <div class="entry__body">
+        <p class="prose">I build both halves of making an AI agent trustworthy: catching what it gets wrong, and
+        catching what it silently leaves out. <a href="https://arxiv.org/abs/2606.18037" target="_blank" rel="noopener">ProvenanceGuard</a>
+        checks whether an agent's claims are actually grounded in the right source (+47% grounding accuracy).
+        Lacuna checks the side most safety tooling skips entirely — omission, the fact that got dropped rather
+        than fabricated (omission F1 0.603→0.747, beating an LLM-judge baseline at ~20× smaller). TraceForge then
+        hardens the agent's behavior itself into replayable, auditable workflows (73% of production traffic
+        served from frozen DAGs). My latest work asks a harder question than "did it omit something" — it
+        attributes exactly which layer of an air-gapped pipeline the omission came from, and finds most of it
+        isn't the model's fault at all (<a href="https://arxiv.org/abs/2607.22448" target="_blank" rel="noopener">layer-attribution paper</a>).</p>
+        <p class="entry__link"><a href="#production">see Production systems ↓</a></p>
+      </div>
+    </article>
+
+    <article class="entry reveal">
+      <div class="entry__meta mono">
+        <p class="entry__name">02 — Domain-specific agents &amp; vision-LLMs</p>
+      </div>
+      <div class="entry__body">
+        <p class="prose">General-purpose vision-language models don't read P&amp;ID diagrams or CAD assemblies
+        reliably out of the box. I continually pretrain and QLoRA-tune hybrid ViT backbones until they do, then
+        wrap them in agents that reason over the result — one such system extracts from 300K+ engineering
+        documents in production, another gives designers structured QC feedback and a 40% productivity gain.
+        The same approach extends to medical report generation.</p>
+        <p class="prose muted">Patents: Hybrid Vision Encoder for Vision LLMs · Learnable Vision LLMs for
+        Engineering Drawings · Continual Pretraining for Mechanical-Domain LLMs · Medical Report Generation with
+        LLMs.</p>
+        <p class="entry__link"><a href="#patents">see Patents ↓</a></p>
+      </div>
+    </article>
+
+    <article class="entry reveal">
+      <div class="entry__meta mono">
+        <p class="entry__name">03 — Model compression &amp; efficient inference</p>
+      </div>
+      <div class="entry__body">
+        <p class="prose">Trustworthy is only useful if it's also small and fast enough to run in the room where
+        the decision gets made — often air-gapped, often on a Jetson, not an H200 cluster. I've patented
+        multi-criteria structured pruning that gets 70% compression under 1% accuracy loss, generalized it into
+        a compression platform used across LLMs and CNNs, and built training-free self-speculative decoding
+        that gets lossless 1.34–1.67× latency reduction. It's the same instinct that let Lacuna's detector run
+        at ~20× smaller than an LLM judge — compression and verification aren't separate skills for me, they're
+        the same problem from two sides.</p>
+        <p class="prose muted">Patents: <a href="https://patents.google.com/patent/US20250272561A1/en" target="_blank" rel="noopener">US20250272561</a> ·
+        <a href="https://patents.google.com/patent/US20240428073A1/en" target="_blank" rel="noopener">US20240428073</a> ·
+        <a href="https://patents.google.com/patent/US20250045584A1/en" target="_blank" rel="noopener">US20250045584</a> ·
+        <a href="https://patents.google.com/patent/US20250005362A1/en" target="_blank" rel="noopener">US20250005362</a> ·
+        <a href="https://patents.google.com/patent/US20250272217A1/en" target="_blank" rel="noopener">US20250272217</a>
+        (the verification framework — patent US20250272217 — bridges directly back to Pillar 1).</p>
+      </div>
+    </article>
+
+    <article class="entry reveal">
+      <div class="entry__meta mono">
+        <p class="entry__name">04 — Where it started: classical CV &amp; CNNs</p>
+      </div>
+      <div class="entry__body">
+        <p class="prose">Before vision-language models were the default tool, I was building and publishing
+        plain CNNs that had to work: <a href="https://iopscience.iop.org/article/10.1088/1757-899X/1084/1/012015/meta" target="_blank" rel="noopener">wavelet-based
+        diagnosis from COVID-19 chest imaging</a>, <a href="https://iopscience.iop.org/article/10.1088/1757-899X/1059/1/012062/meta" target="_blank" rel="noopener">automotive
+        brake-part defect detection</a>, <a href="https://ieeexplore.ieee.org/abstract/document/8728282" target="_blank" rel="noopener">plant-disease
+        classification from leaf images</a>. The throughline from there to hybrid ViT vision-LLMs today hasn't
+        changed — make a model see something specific, and trust its answer.</p>
+      </div>
+    </article>
+
+    <article class="entry reveal">
+      <div class="entry__meta mono">
+        <p class="entry__name">05 — Ph.D.: a fifth axis</p>
+      </div>
+      <div class="entry__body">
+        <p class="prose">My Ph.D. runs a fifth thread in parallel, deliberately in a different domain: causal,
+        uncertainty-aware state-space models for irregular clinical time series — same rigor, different room.
+        Under peer review; details are intentionally kept high-level until that's resolved.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ §02 SNAPSHOT STATS ============ -->
 <section class="section" id="stats">
-  <p class="section-num">§01 · Snapshot</p>
+  <p class="section-num">§02 · Snapshot</p>
   <div class="section__body">
     <p class="prose reveal">The short version, before the detail: patents filed and granted, systems that made it out of the lab, and manuscripts written along the way.</p>
     <div class="stat-tiles reveal" style="--stagger:1">
@@ -183,9 +274,9 @@
   </div>
 </section>
 
-<!-- ============ §02 PATENTS ============ -->
+<!-- ============ §03 PATENTS ============ -->
 <section class="section" id="patents">
-  <p class="section-num">§02 · Patents <span class="mono muted">— 11 total: 10 filed (USPTO, EPO, India) · 1 granted</span></p>
+  <p class="section-num">§03 · Patents <span class="mono muted">— 11 total: 10 filed (USPTO, EPO, India) · 1 granted</span></p>
   <p class="thread-intro prose reveal">Concrete IP outcomes across four families: agentic frameworks, model compression &amp; verification, vision-LLMs for engineering documents, and assistive technology.</p>
 
   <div class="patent-groups">
@@ -199,11 +290,11 @@
     <div class="patent-group reveal">
       <p class="patent-group__title mono">Model compression &amp; verification</p>
       <ul class="patent-list">
-        <li><span class="tag mono">[ published ]</span> <a href="https://patents.google.com/patent/US20250272561A1/en" target="_blank" rel="noopener">US20250272561</a></li>
-        <li><span class="tag mono">[ published ]</span> <a href="https://patents.google.com/patent/US20240428073A1/en" target="_blank" rel="noopener">US20240428073</a></li>
-        <li><span class="tag mono">[ published ]</span> <a href="https://patents.google.com/patent/US20250045584A1/en" target="_blank" rel="noopener">US20250045584</a></li>
-        <li><span class="tag mono">[ published ]</span> <a href="https://patents.google.com/patent/US20250005362A1/en" target="_blank" rel="noopener">US20250005362</a></li>
-        <li><span class="tag mono">[ published ]</span> <a href="https://patents.google.com/patent/US20250272217A1/en" target="_blank" rel="noopener">US20250272217</a></li>
+        <li><span class="tag mono">[ published ]</span> <a href="https://patents.google.com/patent/US20250272561A1/en" target="_blank" rel="noopener">Method and system of compressing deep learning models</a> — <span class="muted mono">US20250272561</span></li>
+        <li><span class="tag mono">[ published ]</span> <a href="https://patents.google.com/patent/US20240428073A1/en" target="_blank" rel="noopener">Method and system of compressing neural network models based on network architecture design</a> — <span class="muted mono">US20240428073</span></li>
+        <li><span class="tag mono">[ published ]</span> <a href="https://patents.google.com/patent/US20250045584A1/en" target="_blank" rel="noopener">Method and system of compressing neural network models based on learnable multi-criteria</a> — <span class="muted mono">US20250045584</span></li>
+        <li><span class="tag mono">[ published ]</span> <a href="https://patents.google.com/patent/US20250005362A1/en" target="_blank" rel="noopener">Method and system of compressing neural network models based on multi criteria-based filter redundancy detection</a> — <span class="muted mono">US20250005362</span></li>
+        <li><span class="tag mono">[ published ]</span> <a href="https://patents.google.com/patent/US20250272217A1/en" target="_blank" rel="noopener">Method and system of verifying deep learning models</a> — <span class="muted mono">US20250272217</span></li>
       </ul>
     </div>
 
@@ -226,13 +317,13 @@
   </div>
 </section>
 
-<!-- ============ §03 PRODUCTION SYSTEMS ============ -->
+<!-- ============ §04 PRODUCTION SYSTEMS ============ -->
 <section class="section" id="production">
-  <p class="section-num">§03 · Research Pushed to Production</p>
-  <p class="thread-intro prose reveal">This work didn't stay in a lab notebook. ProvenanceGuard, Lacuna, and TraceForge are deployed; the vision-LLM platform and edge safety system shipped into real manufacturing lines; the inference work runs under load on H200 clusters. What follows is what's actually running, not just what's published.</p>
+  <p class="section-num">§04 · Research Pushed to Production</p>
+  <p class="thread-intro prose reveal">This work didn't stay in a lab notebook. ProvenanceGuard, Lacuna, and TraceForge are deployed; the vision-LLM platform and edge safety system shipped into real manufacturing lines; the inference work runs under load on H200 clusters. What follows is what's actually running, not just what's published — for how these connect, see <a href="#specialization">Specialization ↑</a>.</p>
 
   <h2 class="thread-title reveal">[A] Agent reliability &amp; factuality — deployed</h2>
-  <p class="thread-intro prose reveal">Three shipped systems, one line: verify what an agent says, catch what it leaves out, then make the safe path the only path.</p>
+  <p class="thread-intro prose reveal">Three shipped systems (see <a href="#specialization">Specialization §01 ↑</a> for how they connect).</p>
 
   <div class="entry-list">
     <article class="entry reveal">
@@ -354,25 +445,24 @@
   </div>
 </section>
 
-<!-- ============ §04 ABOUT ============ -->
+<!-- ============ §05 ABOUT ============ -->
 <section class="section" id="about">
-  <p class="section-num">§04 · About</p>
+  <p class="section-num">§05 · About</p>
   <div class="section__body">
     <p class="prose reveal">
       I've spent 8+ years moving problems from formulation to published research, filed patents, and production
       systems. I founded an assistive-tech startup for the visually impaired before I'd finished a graduate degree,
-      led AI strategy from a CTO's office, and now build agent-reliability and edge-AI systems at Multiverse
-      Computing while finishing a Ph.D. on factuality verification for tool-using agents and state-space models
-      for irregular clinical time series. The thread through all of it is the same: pick problems that matter, and
-      carry them all the way — from a paper draft, to a patent filing, to something running on an H200 cluster or
-      an air-gapped edge box.
+      led AI strategy from a CTO's office, and now lead agent-reliability research at Multiverse Computing while
+      finishing a Ph.D. — see <a href="#specialization">Specialization ↑</a> for what that work actually spans.
+      The thread through all of it is the same: pick problems that matter, and carry them all the way — from a
+      paper draft, to a patent filing, to something running on an H200 cluster or an air-gapped edge box.
     </p>
   </div>
 </section>
 
-<!-- ============ §05 TALKS ============ -->
+<!-- ============ §06 TALKS ============ -->
 <section class="section" id="talks">
-  <p class="section-num">§05 · Talks &amp; Academic Service</p>
+  <p class="section-num">§06 · Talks &amp; Academic Service</p>
   <div class="entry-list">
     <article class="entry reveal">
       <div class="entry__meta mono">
@@ -405,9 +495,9 @@
   </div>
 </section>
 
-<!-- ============ §06 EXPERIENCE ============ -->
+<!-- ============ §07 EXPERIENCE ============ -->
 <section class="section" id="experience">
-  <p class="section-num">§06 · Experience</p>
+  <p class="section-num">§07 · Experience</p>
   <div class="entry-list">
     <article class="entry reveal">
       <div class="entry__meta mono">
@@ -418,7 +508,7 @@
       </div>
       <div class="entry__body">
         <p class="prose">Own the technical strategy for agent-reliability research — ProvenanceGuard, Lacuna,
-        TraceForge (see §03). Sole technical decision-maker for a European national government's agentic AI
+        TraceForge (see §04). Sole technical decision-maker for a European national government's agentic AI
         deployments (medical, manufacturing) running fully offline in air-gapped edge environments.</p>
         <p class="entry__metric mono"><span class="delta">→</span> Kubernetes auto-scaling cut compute cost 40%</p>
         <p class="entry__metric mono"><span class="delta">→</span> LGTM + OpenTelemetry observability improved error-tracing 58%</p>
@@ -438,12 +528,12 @@
       <div class="entry__body">
         <p class="prose">Domain-specific vision LLMs (patented): continual pre-training, SFT, and QLoRA on hybrid
         ViT backbones for assembly-level CAD, P&amp;ID, and electrical drawings — deployed for automated extraction
-        at Fortune 500 industrial manufacturers (see §03[C]).</p>
+        at Fortune 500 industrial manufacturers (see §04[C]).</p>
         <p class="entry__metric mono"><span class="delta">→</span> 300K+ documents processed</p>
         <p class="prose">Self-improving CAD QC agent: multimodal LLMs with structured reasoning traces automating
         quality control of complex assembly drawings.</p>
         <p class="entry__metric mono"><span class="delta">→</span> 40% designer productivity gain</p>
-        <p class="prose">Led structured-pruning research for medical-imaging CNNs (3 patents; see §03[B] for
+        <p class="prose">Led structured-pruning research for medical-imaging CNNs (3 patents; see §04[B] for
         results), later generalized into a no-code compression platform.</p>
         <p class="prose">Real-time edge safety system, in production for an industrial power-tool manufacturer:
         operator-hazard detection on Jetson Orin Nano with 70% latency optimization of YOLOv11 instance
@@ -477,9 +567,9 @@
   </div>
 </section>
 
-<!-- ============ §07 PUBLICATIONS ============ -->
+<!-- ============ §08 PUBLICATIONS ============ -->
 <section class="section" id="publications">
-  <p class="section-num">§07 · Publications</p>
+  <p class="section-num">§08 · Publications</p>
   <ol class="pub-list reveal">
     <li id="pub-1">ProvenanceGuard: Source-Aware Factuality Verification for MCP-Based LLM Agents. <a href="https://arxiv.org/abs/2606.18037" target="_blank" rel="noopener">arXiv:2606.18037</a>, 2026.</li>
     <li id="pub-2">Where Facts Go Missing: A Layerwise Taxonomy and Per-Layer Attribution of Information Omission in Air-Gapped LLM Agent Pipelines. <a href="https://arxiv.org/abs/2607.22448" target="_blank" rel="noopener">arXiv:2607.22448</a>, 2026. Nine-layer taxonomy (L0–L8) of omission origins in quantized, air-gapped agent pipelines, with per-layer attribution via ablation + logit decomposition; 75,476-trial analysis, 0.62 omission rate, 68% originating in deterministic middleware layers rather than the model itself.</li>
@@ -492,9 +582,9 @@
   </ol>
 </section>
 
-<!-- ============ §08 TOOLBOX ============ -->
+<!-- ============ §09 TOOLBOX ============ -->
 <section class="section" id="toolbox">
-  <p class="section-num">§08 · Toolbox</p>
+  <p class="section-num">§09 · Toolbox</p>
   <p class="thread-intro prose reveal">Full-stack, end to end: research &amp; algorithms → training systems → inference optimization → agent orchestration → edge &amp; deployment infra → observability. Same pipeline the production systems above actually run on.</p>
   <div class="toolbox reveal">
     <div class="toolbox__group">
@@ -570,9 +660,9 @@
   </div>
 </section>
 
-<!-- ============ §09 EDUCATION ============ -->
+<!-- ============ §10 EDUCATION ============ -->
 <section class="section" id="education">
-  <p class="section-num">§09 · Education &amp; Awards</p>
+  <p class="section-num">§10 · Education &amp; Awards</p>
   <div class="entry-list">
     <article class="entry reveal">
       <div class="entry__meta mono">
@@ -623,9 +713,9 @@
   </div>
 </section>
 
-<!-- ============ §10 CONTACT ============ -->
+<!-- ============ §11 CONTACT ============ -->
 <footer class="section footer" id="contact">
-  <p class="section-num">§10 · Contact</p>
+  <p class="section-num">§11 · Contact</p>
   <div class="footer__body">
     <p class="prose footer__lead">Based in San Sebastián, Spain. EU work authorization, open to relocation.</p>
     <div class="cta-row">
