@@ -5,32 +5,15 @@
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var progressBar = document.getElementById("scroll-progress");
-  var railProgress = document.getElementById("rail-progress");
   function updateProgress() {
     var doc = document.documentElement;
     var top = doc.scrollTop || document.body.scrollTop;
     var h = doc.scrollHeight - doc.clientHeight;
     var pct = h > 0 ? (top / h) * 100 : 0;
     if (progressBar) progressBar.style.width = pct + "%";
-    if (railProgress) railProgress.style.height = pct + "%";
   }
   window.addEventListener("scroll", updateProgress, { passive: true });
   updateProgress();
-
-  var navToggle = document.getElementById("nav-toggle");
-  var navList = document.getElementById("top-nav-list");
-  if (navToggle && navList) {
-    navToggle.addEventListener("click", function () {
-      var open = navList.classList.toggle("is-open");
-      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-    navList.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        navList.classList.remove("is-open");
-        navToggle.setAttribute("aria-expanded", "false");
-      });
-    });
-  }
 
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener("click", function (e) {
@@ -73,6 +56,122 @@
   document.querySelectorAll(".hero .reveal-clip, .hero .reveal-up").forEach(function (el, i) {
     el.style.setProperty("--stagger", i);
     setTimeout(function () { el.classList.add("is-visible"); }, 40);
+  });
+
+  /* ---------- research-waves horizontal track ---------- */
+  var track = document.getElementById("wave-track");
+  if (track) {
+    var panels = Array.prototype.slice.call(track.querySelectorAll(".wave-panel"));
+    var prevBtn = document.getElementById("wave-prev");
+    var nextBtn = document.getElementById("wave-next");
+    var counter = document.getElementById("wave-counter");
+    var total = panels.length;
+
+    function pad(n) { return n < 10 ? "0" + n : String(n); }
+
+    /* geometry-derived index — used only to resync after organic (trackpad/
+       touch/drag) scrolling, never as the source of truth for a click that's
+       still mid-animation (that would race the in-flight smooth scroll).
+       Picks the panel with the greatest visible overlap with the track's own
+       viewport, rather than the panel closest to the left edge — the latter
+       misjudges the last panel when there isn't enough trailing space to
+       scroll it perfectly flush (browsers clamp scrollLeft to the max). */
+    function nearestIndex() {
+      if (!panels.length) return 0;
+      var trackRect = track.getBoundingClientRect();
+      var best = 0;
+      var bestOverlap = -Infinity;
+      panels.forEach(function (panel, i) {
+        var r = panel.getBoundingClientRect();
+        var overlap = Math.min(r.right, trackRect.right) - Math.max(r.left, trackRect.left);
+        if (overlap > bestOverlap) { bestOverlap = overlap; best = i; }
+      });
+      return best;
+    }
+
+    var activeIndex = nearestIndex();
+
+    function render() {
+      if (counter) counter.textContent = pad(activeIndex + 1) + " / " + pad(total);
+      if (prevBtn) prevBtn.disabled = activeIndex <= 0;
+      if (nextBtn) nextBtn.disabled = activeIndex >= total - 1;
+    }
+
+    function goTo(idx) {
+      idx = Math.max(0, Math.min(total - 1, idx));
+      var panel = panels[idx];
+      if (!panel) return;
+      activeIndex = idx;
+      render();
+      /* the last panel may not have enough trailing space to snap fully
+         flush to the start — go to the true max scroll instead so it ends
+         up as visible as the layout allows. */
+      var targetLeft = (idx === total - 1)
+        ? (track.scrollWidth - track.clientWidth)
+        : (panel.offsetLeft - track.offsetLeft);
+      track.scrollTo({ left: targetLeft, behavior: reduceMotion ? "auto" : "smooth" });
+    }
+
+    if (prevBtn) prevBtn.addEventListener("click", function () { goTo(activeIndex - 1); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { goTo(activeIndex + 1); });
+
+    track.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); goTo(activeIndex + 1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); goTo(activeIndex - 1); }
+    });
+
+    /* resync from real scroll position after organic scrolling settles
+       (trackpad, touch swipe, or dragging the scrollbar) */
+    var scrollTimer = null;
+    track.addEventListener("scroll", function () {
+      if (scrollTimer) window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(function () {
+        activeIndex = nearestIndex();
+        render();
+      }, 120);
+    }, { passive: true });
+
+    window.addEventListener("resize", function () {
+      activeIndex = nearestIndex();
+      render();
+    });
+    render();
+  }
+
+  /* ---------- tabbed ledger ("the record") — progressive enhancement ---------- */
+  document.querySelectorAll("[data-tabs]").forEach(function (container) {
+    var tabs = Array.prototype.slice.call(container.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) return;
+    var panels = tabs.map(function (tab) {
+      return document.getElementById(tab.getAttribute("aria-controls"));
+    });
+
+    function activate(index, focusTab) {
+      tabs.forEach(function (tab, i) {
+        var selected = i === index;
+        tab.setAttribute("aria-selected", selected ? "true" : "false");
+        tab.tabIndex = selected ? 0 : -1;
+        if (panels[i]) panels[i].hidden = !selected;
+      });
+      if (focusTab) tabs[index].focus();
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { activate(i, false); });
+      tab.addEventListener("keydown", function (e) {
+        var next;
+        if (e.key === "ArrowRight") next = (i + 1) % tabs.length;
+        else if (e.key === "ArrowLeft") next = (i - 1 + tabs.length) % tabs.length;
+        else if (e.key === "Home") next = 0;
+        else if (e.key === "End") next = tabs.length - 1;
+        else return;
+        e.preventDefault();
+        activate(next, true);
+      });
+    });
+
+    /* only hide non-active panels once JS has actually run */
+    activate(0, false);
   });
 
   var copyBtn = document.getElementById("copy-email-btn");
