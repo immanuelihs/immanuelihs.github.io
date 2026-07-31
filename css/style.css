@@ -181,49 +181,38 @@ main {
 }
 .hero__inner {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
   gap: var(--space-6);
   align-items: center;
   margin-top: var(--space-5);
 }
-.hero__graphic {
-  width: 160px;
+.hero__body {
+  max-width: 58ch;
+  margin-top: var(--space-3);
+}
+.hero__meta {
+  font-size: var(--fs-mono);
+  color: var(--muted);
+  margin-top: var(--space-4);
+  letter-spacing: 0.02em;
+}
+/* two-column variant, activated once assets/img/headshot.jpg exists:
+   add class "hero--with-photo" on the .hero section and uncomment the
+   <figure class="hero__photo"> block in index.html */
+.hero--with-photo .hero__inner {
+  grid-template-columns: 1fr auto;
+}
+.hero__photo {
   justify-self: end;
-  opacity: 0.85;
+  width: clamp(180px, 22vw, 300px);
 }
-.dag-svg { width: 100%; height: auto; }
-.dag-edge {
-  fill: none;
-  stroke: var(--hairline);
-  stroke-width: 1.5;
-}
-.dag-node {
-  fill: var(--bg);
-  stroke: var(--accent);
-  stroke-width: 2;
-}
-/* draw-on animation for the DAG */
-.dag-edge {
-  stroke-dasharray: 260;
-  stroke-dashoffset: 260;
-  animation: draw 1.6s var(--ease-out) forwards;
-}
-.dag-nodes .dag-node {
-  opacity: 0;
-  animation: fadein 0.5s var(--ease-out) forwards;
-}
-.dag-nodes .dag-node:nth-of-type(1) { animation-delay: 0.1s; }
-.dag-nodes .dag-node:nth-of-type(2) { animation-delay: 0.5s; }
-.dag-nodes .dag-node:nth-of-type(3) { animation-delay: 0.8s; }
-.dag-nodes .dag-node:nth-of-type(4) { animation-delay: 0.9s; }
-.dag-nodes .dag-node:nth-of-type(5) { animation-delay: 1.2s; }
-.dag-nodes .dag-node:nth-of-type(6) { animation-delay: 1.5s; }
-@keyframes draw { to { stroke-dashoffset: 0; } }
-@keyframes fadein { to { opacity: 1; } }
-
-@media (prefers-reduced-motion: reduce) {
-  .dag-edge { stroke-dashoffset: 0; animation: none; }
-  .dag-node { opacity: 1; animation: none; }
+.hero__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 2px solid var(--hairline);
 }
 
 /* ---------- CTA row ---------- */
@@ -249,21 +238,6 @@ main {
   color: var(--accent);
 }
 .cta--btn { background: transparent; color: var(--text); border: 1px solid var(--hairline); }
-
-/* ---------- hero stat chips ---------- */
-.stat-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: var(--space-4);
-}
-.stat-chip {
-  font-size: var(--fs-mono);
-  color: var(--text);
-  background: var(--chip);
-  border: 1px solid var(--hairline);
-  padding: 0.4rem 0.75rem;
-}
 
 /* ---------- link underline on hover (prose links) ---------- */
 .prose a, .entry__link a, .pub-list a, .patent-list a {
@@ -569,8 +543,8 @@ a.artifact:hover, a.artifact:focus-visible { border-color: var(--accent); color:
    responsive
    ============================================================ */
 @media (max-width: 900px) {
-  .hero__inner { grid-template-columns: 1fr; }
-  .hero__graphic { justify-self: start; width: 140px; margin-top: var(--space-3); order: -1; }
+  .hero__inner, .hero--with-photo .hero__inner { grid-template-columns: 1fr; }
+  .hero__photo { justify-self: start; width: 160px; margin-top: var(--space-3); order: -1; }
   .entry { grid-template-columns: 1fr; gap: var(--space-2); }
   .wave-panel { width: min(88vw, 900px); }
 }
@@ -592,7 +566,7 @@ a.artifact:hover, a.artifact:focus-visible { border-color: var(--accent); color:
    print
    ============================================================ */
 @media print {
-  .top-nav, .scroll-progress, .dot-grid, .grain, .hero__graphic, .skip-link, .wave-controls {
+  .top-nav, .scroll-progress, .dot-grid, .grain, .hero__photo, .skip-link, .wave-controls {
     display: none !important;
   }
   body::before { display: none !important; }
